@@ -1,24 +1,16 @@
-import logo from './logo.svg';
 import './App.css';
+import PuzzleBoard from './components/PuzzleBoard/PuzzleBoard';
 
 function App() {
+  
+  const movesPGN = "1. Qa5 Kxc1+ 2. Qe1# 1-0";
+  const positionFEN = "8/8/8/8/1Q6/1K6/8/2Nk4 w - - 0 1"
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div style={{ width: 500 + "px" }}>
+        <PuzzleBoard positionFEN={positionFEN} movestrPGN={movesPGN} />
+      </div>
+    </>
   );
 }
 
