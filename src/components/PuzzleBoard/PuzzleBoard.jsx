@@ -1,18 +1,27 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Chessboard } from "react-chessboard"
 import { Chess } from "chess.js"
 
 let moveIndex = 0
 function PuzzleBoard({ positionFEN, movestrPGN }) {
-    const [moveLogic] = useState(new Chess(positionFEN))
-    const [, setPosition] = useState(moveLogic.fen())
+    const [moveLogic, setMoveLogic] = useState(new Chess(positionFEN))
+    const [position, setPosition] = useState(positionFEN)
+    //We updated the state variables using usEffect so that they actually change on load
+    useEffect(() => {
+        setPosition(positionFEN);
+        setMoveLogic(new Chess(positionFEN));
+            //moveIndex must be reset when the puzzle resets.
+            moveIndex = 0;
+    }, [positionFEN])
+    
     const delayInMillis = 500
-
     const moveNumberOrGameResult = /(\d\.|[01]-[01])+/
     //Convert the move string to a move array and gut the headers. 
     let movesArray = movestrPGN.split(' ').filter((element) => !element.match(moveNumberOrGameResult))
+   
     const onDrop = (sourceSquare, targetSquare) => {
         let moveAlgebraic = convertObjectToAlgebraic(sourceSquare, targetSquare)
+        
         if (isCorrectMove(moveAlgebraic)) {
             updatePuzzle(moveAlgebraic)
         }
@@ -40,7 +49,7 @@ function PuzzleBoard({ positionFEN, movestrPGN }) {
     }
     return (
         <>
-            <Chessboard position={moveLogic.fen()} onPieceDrop={onDrop} />
+            <Chessboard position={position} onPieceDrop={onDrop} />
             {moveIndex >= movesArray.length && <p>You Win!</p>}
         </>
     )
