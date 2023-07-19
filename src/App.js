@@ -5,11 +5,12 @@ import axios from 'axios'
 function App() {
   const [movesPGN, setMovesPGN] = useState("")
   const [positionFEN, setPositionFEN] = useState("")
-  const apiURL = "http://localhost:8080/"
-  const [puzzleID, setPuzzleID] = useState(0);
+  const [puzzleID, setPuzzleID] = useState(12);
   //Read in the current puzzle from the backend. 
+  const apiURL = "http://localhost:8080/"
   useEffect(() => {
     axios.get(`${apiURL}${puzzleID}`).then(response => {
+      console.log(response.data);
       setMovesPGN(response.data.Moves);
       setPositionFEN(response.data.FEN);
     }).catch(response => {
@@ -26,7 +27,7 @@ function App() {
       <div style={{ width: 500 + "px" }}>
         <PuzzleBoard positionFEN={positionFEN} movestrPGN={movesPGN} puzzleID={puzzleID}/>
       </div>
-      <button onClick = {() => {setPuzzleID((puzzleID+1)%3)}}>Next Puzzle</button>
+      <button onClick = {() => {setPuzzleID((puzzleID+1))}}>Next Puzzle</button>
     </>
   )
 }

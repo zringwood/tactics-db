@@ -10,8 +10,8 @@ function PuzzleBoard({ positionFEN, movestrPGN }) {
     useEffect(() => {
         setPosition(positionFEN);
         setMoveLogic(new Chess(positionFEN));
-            //moveIndex must be reset when the puzzle resets.
-            moveIndex = 0;
+        //moveIndex must be reset when the puzzle resets.
+        moveIndex = 0;
     }, [positionFEN])
     
     const delayInMillis = 500
