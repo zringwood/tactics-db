@@ -2,36 +2,46 @@ import { useState } from "react";
 import { Chessboard } from "react-chessboard";
 import { Chess } from "chess.js";
 
+let moveIndex = 0;
 function PuzzleBoard({ positionFEN, movestrPGN }) {
-    const [chess, setChess] = useState(new Chess(positionFEN));
-    const [moveIndex, setMoveIndex] = useState(0);
-    //Convert the move string to a move array. 
-    let movesArray = movestrPGN.split(' ');
-    //Gut the headers from the array
-    movesArray = movesArray.filter((element) => !element.match(/(\d\.|[01]-[01])+/))
-    const onDrop = (sourceSquare, targetSquare) => {
+    const [chess] = useState(new Chess(positionFEN));
+    const [, setPosition] = useState(chess.fen());
+    const delayInMillis = 500;
 
-        console.log(sourceSquare, chess.get(sourceSquare));
-        //Build the algebraic string
-        let strInAlgebraic = `${chess.get(sourceSquare).type.toUpperCase()}${!!chess.get(targetSquare).type ? 'x' : ''}${targetSquare}`;
-        //The Regex is there to strip out the special characters in the PGN. 
-        if (strInAlgebraic === movesArray[moveIndex].replace(/([#+])+/, '')) {
-            //TODO: Promotion?
-            chess.move(strInAlgebraic);
-            setChess(new Chess(chess.fen()));
-            if (moveIndex + 1 < movesArray.length) {
+    const moveNumberOrGameResult = /(\d\.|[01]-[01])+/;
+    //Convert the move string to a move array and gut the headers. 
+    let movesArray = movestrPGN.split(' ').filter((element) => !element.match(moveNumberOrGameResult));
+    const onDrop = (sourceSquare, targetSquare) => {
+        let moveAlgebraic = convertObjectToAlgebraic(sourceSquare, targetSquare);
+        if (isCorrectMove(moveAlgebraic)) {
+            updatePuzzle(moveAlgebraic)
+            if (!isEndofPuzzle()) {
                 setTimeout(() => {
-                    chess.move(movesArray[moveIndex + 1]);
-                    setChess(new Chess(chess.fen()));
-                }, 500)
+                    updatePuzzle(movesArray[moveIndex])
+                }, delayInMillis)
             }
-            setMoveIndex(moveIndex + 2);
         }
+    }
+    const convertObjectToAlgebraic = (sourceSquare, targetSquare) => {
+        return `${chess.get(sourceSquare).type.toUpperCase()}${!!chess.get(targetSquare).type ? 'x' : ''}${targetSquare}`;
+    }
+    const isCorrectMove = (moveAlgebraic) => {
+        const specialPGNCharacters = /([#+])+/;
+        const noCharacter = '';
+        return moveAlgebraic === movesArray[moveIndex].replace(specialPGNCharacters, noCharacter)
+    }
+    const isEndofPuzzle = () => {
+        return moveIndex >= movesArray.length;
+    }
+    const updatePuzzle = (moveAlgebraic) => {
+        chess.move(moveAlgebraic);
+        moveIndex += 1;
+        setPosition(chess.fen());
     }
     return (
         <>
             <Chessboard position={chess.fen()} onPieceDrop={onDrop} />
-            {moveIndex > movesArray.length && <p>You Win!</p>}
+            {moveIndex >= movesArray.length && <p>You Win!</p>}
         </>
     )
 }
