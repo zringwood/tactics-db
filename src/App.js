@@ -5,7 +5,7 @@ import axios from 'axios'
 function App() {
   const [movesPGN, setMovesPGN] = useState("")
   const [positionFEN, setPositionFEN] = useState("")
-  const [puzzleID, setPuzzleID] = useState(2);
+  const [puzzleID, setPuzzleID] = useState(1);
   const [solver, setSolver] = useState("");
   //Read in the current puzzle from the backend. 
   const apiURL = "http://localhost:8080/"
