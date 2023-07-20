@@ -48,8 +48,7 @@ function PuzzleBoard({ positionFEN, movestrPGN, solver }) {
     }
     //In some cases, the first move of the move array is the opponent's move rather than the players. 
     //In this case we need to update the board immediately.
-    if(moveLogic.turn() !== solver.charAt(0).toLowerCase() && (movesArray[0].search("...") > -1 && solver === "White")){
-        //First move is for black but the solver is white. 
+    if(moveLogic.turn() !== solver.charAt(0).toLowerCase()){
         updatePuzzle(movesArray[moveIndex])
     }
 
