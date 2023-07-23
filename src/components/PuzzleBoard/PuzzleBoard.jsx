@@ -2,16 +2,18 @@ import { useState, useEffect } from "react"
 import { Chessboard } from "react-chessboard"
 import { Chess } from "chess.js"
 
-//Known bug, for whatever reason this just doesn't work with state. 
-let moveIndex = 0;
+
 function PuzzleBoard({ positionFEN, movestrPGN, solver }) {
     const [moveLogic, setMoveLogic] = useState(new Chess(positionFEN))
-    //We updated the state variables using useEffect so that they actually change on load
+    const [moveIndex, setMoveIndex] = useState(0)
+
+    //We update the state variables using useEffect so that they actually change on load
     useEffect(() => {
         setMoveLogic(new Chess(positionFEN));
         //moveIndex must be reset when the puzzle resets.
-       moveIndex = 0
+        setMoveIndex(0)
     }, [positionFEN])
+
     const delayInMillis = 500
     const moveNumberOrGameResult = /(\d\.{1,3}|[01]-[01]|\*)+/
     //Convert the move string to a move array and gut the headers. 
@@ -42,9 +44,9 @@ function PuzzleBoard({ positionFEN, movestrPGN, solver }) {
         return moveIndex >= movesArray.length
     }
     const updatePuzzle = (moveAlgebraic) => {
-        moveLogic.move(moveAlgebraic)
+       moveLogic.move(moveAlgebraic)
         setMoveLogic(new Chess(moveLogic.fen()))
-        moveIndex +=1;
+       setMoveIndex(moveIndex +1)
     }
     //In the event that the solver is different from the first move, we need to animate the first move. 
     if (solver.charAt(0).toLowerCase() !== moveLogic.turn()) {
@@ -54,7 +56,7 @@ function PuzzleBoard({ positionFEN, movestrPGN, solver }) {
             if (moveIndex === 0) {
                 updatePuzzle(movesArray[moveIndex])
             }
-        }, delayInMillis*2)
+        }, delayInMillis)
 
     }
     return (
