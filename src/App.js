@@ -18,18 +18,18 @@ function App() {
     }).catch(response => {
       console.error(response);
     })
-  },[puzzleID])
-  if(!positionFEN || !movesPGN){
+  }, [puzzleID])
+  if (!positionFEN || !movesPGN) {
     return <>
-    Loading...
+      Loading...
     </>
   }
   return (
     <>
       <div style={{ width: 500 + "px" }}>
-        <PuzzleBoard positionFEN={positionFEN} movestrPGN={movesPGN} puzzleID={puzzleID} solver={solver}/>
+        <PuzzleBoard positionFEN={positionFEN} movestrPGN={movesPGN} puzzleID={puzzleID} solver={solver} />
       </div>
-      <button onClick = {() => {setPuzzleID((puzzleID+1)%10)}}>Next Puzzle</button>
+      <button onClick={() => { setPuzzleID((puzzleID + 1) % 10) }}>Next Puzzle</button>
     </>
   )
 }
