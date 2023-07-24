@@ -15,11 +15,10 @@ function PuzzlePage({category, categoryRange}) {
         axios.get(apiURL).then(response => {
             setMovesPGN(response.data.Moves);
             setPositionFEN(response.data.FEN);
-            console.log(response)
         }).catch(response => {
             console.error(response);
         })
-    }, [puzzleID])
+    }, [apiURL])
     if (!positionFEN || !movesPGN ) {
         return <>
           Loading...
