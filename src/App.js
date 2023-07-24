@@ -12,8 +12,7 @@ function App() {
       <BrowserRouter>
       <Header ranges = {ranges}/>
       <Routes>
-        <Route path = "/" element ={<Navigate to={`/puzzle/${Math.ceil(Math.random() * 3e6)}`}/>}/>
-        <Route path="/puzzle/:id" element={<PuzzlePage category= {"/puzzle"} categoryRange={ranges.totalGames}/>}/>
+        <Route path = "/" element ={<Navigate to={`/middlegames/${Math.ceil(Math.random() * ranges.middlegames)}`}/>}/>
         <Route path="/middlegames/:id" element={<PuzzlePage category={"/middlegames"} categoryRange={ranges.middlegames-1}/>}/>
         <Route path="/endgames/:id" element={<PuzzlePage category={"/endgames"} categoryRange={ranges.endgames-1}/>}/>
       </Routes>

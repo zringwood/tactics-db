@@ -14,7 +14,6 @@ function PuzzleBoard({ positionFEN, movesArray, orientation }) {
     }, [positionFEN])
     const onDrop = (sourceSquare, targetSquare) => {
         let move = `${sourceSquare}${targetSquare}`
-        console.log(move, moveIndex)
         if (isCorrectMove(move)) {
             updatePuzzle(move)
             if (!isEndofPuzzle()) {
