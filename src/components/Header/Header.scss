@@ -4,19 +4,37 @@
     display:flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
     list-style-type: none;
     margin: 0;
-
+    height:4rem;
+    padding: 0 $mobile-indent;
+    @include tablet{
+        padding: 0 $tablet-indent;
+    }
     &__link{
-        padding: 1rem $mobile-indent;
+        
         background-color: $square-light;
-        @include tablet{
-            padding: 1rem $tablet-indent;
-        }
+        
     }
     &__text{
         color:black;
         margin: 0;
+    }
+    &__settings{
+        background-image: url('../../assets/settings.svg');
+        width: 2rem;
+        height:2rem;
+        background-repeat: no-repeat;
+        background-size: cover;
+        border:none;
+        outline: none;
+        background-color: rgba(#000, 0);
+        z-index: 20;
+        &--animate{
+            transition: 1.5s;
+            transform: rotate(360deg);
+        }
     }
 }
 .active{
