@@ -1,0 +1,24 @@
+@use "../../styles/partials" as *;
+.navbar{
+    background-color: $square-light;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0;
+
+    &__link{
+        padding: 1rem $mobile-indent;
+        background-color: $square-light;
+        @include tablet{
+            padding: 1rem $tablet-indent;
+        }
+    }
+    &__text{
+        color:black;
+        margin: 0;
+    }
+}
+.active{
+    background-color: $square-dark;
+}

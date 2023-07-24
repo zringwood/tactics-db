@@ -1,9 +1,10 @@
 import PuzzleBoard from "../components/PuzzleBoard/PuzzleBoard"
+import "../pages/PuzzlePage.scss"
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from "react-router"
 
-function PuzzlePage({category, categoryRange}) {
+function PuzzlePage({ category, categoryRange }) {
     const [movesPGN, setMovesPGN] = useState("")
     const [positionFEN, setPositionFEN] = useState("")
     const puzzleID = useParams().id
@@ -19,18 +20,20 @@ function PuzzlePage({category, categoryRange}) {
             console.error(response);
         })
     }, [apiURL])
-    if (!positionFEN || !movesPGN ) {
+    if (!positionFEN || !movesPGN) {
         return <>
-          Loading...
+            Loading...
         </>
-      }
+    }
     return (
         <>
-            <div style={{ width: 500 + "px" }}>
-                <PuzzleBoard positionFEN={positionFEN} movesArray={movesPGN.split(' ')} orientation = {positionFEN.indexOf('b') > positionFEN.indexOf('w') ? "white":"black"}  />
-            </div>
-            <button onClick={() => { navigate(`${category}/${Math.ceil(Math.random() * categoryRange)}`)}}>New Puzzle</button>
-            
+        <div className="board-container">
+            <PuzzleBoard positionFEN={positionFEN} movesArray={movesPGN.split(' ')} orientation={positionFEN.indexOf('b') > positionFEN.indexOf('w') ? "white" : "black"} />
+        </div>
+        <div className="navpanel">
+        <button className="navbutton navbutton--backward"></button>
+        <button className="navbutton navbutton--forward" onClick={() => { navigate(`${category}/${Math.ceil(Math.random() * categoryRange)}`) }}></button>
+        </div>
         </>
     )
 }

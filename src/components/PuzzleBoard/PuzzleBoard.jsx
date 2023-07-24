@@ -47,7 +47,8 @@ function PuzzleBoard({ positionFEN, movesArray, orientation }) {
     }
     return (
         <>
-            <Chessboard position={moveLogic.fen()} onPieceDrop={onDrop} boardOrientation={orientation}/>
+            <Chessboard position={moveLogic.fen()} onPieceDrop={onDrop} boardOrientation={orientation} customBoardStyle={{boxShadow: '0 5px 15px rgba(0, 0, 0, 0.5 ',
+    borderRadius: "24px"}}/>
             {moveIndex >= movesArray.length && <p>You Win!</p>}
         </>
     )
