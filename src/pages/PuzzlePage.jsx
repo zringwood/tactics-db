@@ -23,7 +23,6 @@ function PuzzlePage() {
           Loading...
         </>
       }
-      console.log(positionFEN.indexOf('b') > positionFEN.indexOf('w'))
     return (
         <>
             <div style={{ width: 500 + "px" }}>

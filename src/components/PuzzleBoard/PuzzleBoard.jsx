@@ -12,8 +12,6 @@ function PuzzleBoard({ positionFEN, movesArray, orientation }) {
         //moveIndex must be reset when the puzzle resets.
         moveIndex = 0;
     }, [positionFEN])
-console.log(positionFEN)
-
     const onDrop = (sourceSquare, targetSquare) => {
         let move = `${sourceSquare}${targetSquare}`
         console.log(move, moveIndex)
