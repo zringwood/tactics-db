@@ -18,6 +18,7 @@ function PuzzleBoard({ positionFEN, movesArray }) {
 
     const onDrop = (sourceSquare, targetSquare) => {
         let move = `${sourceSquare}${targetSquare}`
+        console.log(move, moveIndex)
         if (isCorrectMove(move)) {
             updatePuzzle(move)
             if (!isEndofPuzzle()) {
@@ -36,13 +37,18 @@ function PuzzleBoard({ positionFEN, movesArray }) {
     }
     const updatePuzzle = (move) => {
         moveLogic.move(move)
+        console.log("Reached")
         moveIndex += 1;
         setMoveLogic(new Chess(moveLogic.fen()))
     }
-    if (moveIndex === 0)
-        {setTimeout(() => {
-            updatePuzzle(movesArray[0])
-        }, 500)}
+    //Plays the first move. 
+    if (moveIndex === 0) {
+        moveIndex += 1;
+        setTimeout(() => {
+            moveLogic.move(movesArray[0])
+            setMoveLogic(new Chess(moveLogic.fen()))
+        }, 500)
+    }
     return (
         <>
             <Chessboard position={moveLogic.fen()} onPieceDrop={onDrop} />
