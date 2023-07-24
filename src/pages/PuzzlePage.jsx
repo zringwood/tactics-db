@@ -1,23 +1,25 @@
 import PuzzleBoard from "../components/PuzzleBoard/PuzzleBoard"
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { useNavigate, useParams } from "react-router"
+import { useLocation, useNavigate } from "react-router"
 
 function PuzzlePage() {
     const [movesPGN, setMovesPGN] = useState("")
     const [positionFEN, setPositionFEN] = useState("")
-    const puzzleID = Number(useParams().id);
+    const query = useLocation()
+    console.log(query)
     const navigate = useNavigate();
     //Read in the current puzzle from the backend. 
-    const apiURL = "http://localhost:8080/"
+    const apiURL = "http://localhost:8080"
     useEffect(() => {
-        axios.get(`${apiURL}${puzzleID}`).then(response => {
+        axios.get(`${apiURL}${query.pathname}${query.search}`).then(response => {
             setMovesPGN(response.data.Moves);
             setPositionFEN(response.data.FEN);
+            console.log(response)
         }).catch(response => {
             console.error(response);
         })
-    }, [puzzleID])
+    }, [query])
     if (!positionFEN || !movesPGN ) {
         return <>
           Loading...
@@ -28,7 +30,7 @@ function PuzzlePage() {
             <div style={{ width: 500 + "px" }}>
                 <PuzzleBoard positionFEN={positionFEN} movesArray={movesPGN.split(' ')} orientation = {positionFEN.indexOf('b') > positionFEN.indexOf('w') ? "white":"black"}  />
             </div>
-            <button onClick={() => { navigate(`/${puzzleID+1}`)}}>Next Puzzle</button>
+            <button onClick={() => { navigate(`/puzzle/${Math.ceil(Math.random() * 3e6)}`)}}>New Puzzle</button>
             
         </>
     )
