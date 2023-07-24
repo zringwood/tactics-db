@@ -4,17 +4,15 @@ import { Chess } from "chess.js"
 
 //This doesn't work with state because setState is asynchronous.  
 let moveIndex = 0;
-function PuzzleBoard({ positionFEN, movesArray }) {
+function PuzzleBoard({ positionFEN, movesArray, orientation }) {
     const [moveLogic, setMoveLogic] = useState(new Chess(positionFEN))
-
-    //If we don't update the state variables through useEffect they won't actually change. 
+    //This is needed to trigger a rerender in the chessboard component. 
     useEffect(() => {
         setMoveLogic(new Chess(positionFEN));
         //moveIndex must be reset when the puzzle resets.
         moveIndex = 0;
     }, [positionFEN])
-    console.log(movesArray)
-
+console.log(positionFEN)
 
     const onDrop = (sourceSquare, targetSquare) => {
         let move = `${sourceSquare}${targetSquare}`
@@ -51,7 +49,7 @@ function PuzzleBoard({ positionFEN, movesArray }) {
     }
     return (
         <>
-            <Chessboard position={moveLogic.fen()} onPieceDrop={onDrop} />
+            <Chessboard position={moveLogic.fen()} onPieceDrop={onDrop} boardOrientation={orientation}/>
             {moveIndex >= movesArray.length && <p>You Win!</p>}
             <button onClick={() => { }}>Hint</button>
         </>

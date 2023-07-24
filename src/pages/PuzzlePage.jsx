@@ -23,10 +23,11 @@ function PuzzlePage() {
           Loading...
         </>
       }
+      console.log(positionFEN.indexOf('b') > positionFEN.indexOf('w'))
     return (
         <>
             <div style={{ width: 500 + "px" }}>
-                <PuzzleBoard positionFEN={positionFEN} movesArray={movesPGN.split(' ')}  />
+                <PuzzleBoard positionFEN={positionFEN} movesArray={movesPGN.split(' ')} orientation = {positionFEN.indexOf('b') > positionFEN.indexOf('w') ? "white":"black"}  />
             </div>
             <button onClick={() => { navigate(`/${puzzleID+1}`)}}>Next Puzzle</button>
             

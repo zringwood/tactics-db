@@ -9,7 +9,6 @@ function App() {
       <Routes>
         <Route path="/:id" element={<PuzzlePage />}/>
       </Routes>
-      
       </BrowserRouter>
     </>
   )
