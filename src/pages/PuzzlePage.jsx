@@ -26,7 +26,7 @@ function PuzzlePage() {
     return (
         <>
             <div style={{ width: 500 + "px" }}>
-                <PuzzleBoard positionFEN={positionFEN} movestrPGN={movesPGN}  />
+                <PuzzleBoard positionFEN={positionFEN} movesArray={movesPGN.split(' ')}  />
             </div>
             <button onClick={() => { navigate(`/${puzzleID+1}`)}}>Next Puzzle</button>
             
