@@ -49,7 +49,6 @@ function PuzzleBoard({ positionFEN, movesArray, orientation }) {
         <>
             <Chessboard position={moveLogic.fen()} onPieceDrop={onDrop} boardOrientation={orientation}/>
             {moveIndex >= movesArray.length && <p>You Win!</p>}
-            <button onClick={() => { }}>Hint</button>
         </>
     )
 }

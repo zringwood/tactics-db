@@ -6,8 +6,8 @@ function App() {
   return (
     <>
       <BrowserRouter>
-      <NavLink to='/puzzle?category="middlegame"'>Middlegames</NavLink>
-      <NavLink to='/puzzle?category="endgame"'>Endgames</NavLink>
+      <NavLink to='/puzzle?category="middlegames"'>Middlegames</NavLink>
+      <NavLink to='/puzzle?category="endgames"'>Endgames</NavLink>
       <Routes>
         <Route path = "/" element ={<Navigate to={`/puzzle/${Math.ceil(Math.random() * 3e6)}`}/>}/>
         <Route path="/puzzle/:id" element={<PuzzlePage />}/>
